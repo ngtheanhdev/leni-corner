@@ -2,49 +2,287 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import ProductCard from '../components/ProductCard.astro';
+import BlogCard from '../components/BlogCard.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { getCollection } from 'astro:content';
+
+// Lấy sản phẩm nổi bật
+const allProducts = await getCollection('products');
+const featuredProducts = allProducts
+	.filter(p => p.data.featured)
+	.slice(0, 4);
+
+// Nếu không có sản phẩm featured, lấy 4 sản phẩm mới nhất
+const displayProducts = featuredProducts.length > 0
+	? featuredProducts
+	: allProducts.slice(0, 4);
+
+// Lấy bài viết mới nhất
+const allPosts = await getCollection('blog');
+const recentPosts = allPosts
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 3);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="vi">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
 	<body>
 		<Header />
 		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to build
-				a personal website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to <a href="https://docs.astro.build/"
-					>read the docs
-				</a> or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out <a
-					href="https://github.com/Charca/astro-blog-template"
-					>astro-blog-template
-				</a> by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+			<!-- Hero Section -->
+			<section class="hero">
+				<h1>Chào mừng đến với Góc Len của Rici</h1>
+				<p>
+					Nơi trưng bày những sản phẩm móc len handmade dễ thương,
+					được tạo nên từ tình yêu và sự tỉ mỉ trong từng mũi kim.
+				</p>
+				<div class="hero-buttons">
+					<a href="/san-pham" class="btn btn-primary">Xem sản phẩm</a>
+					<a href="/lien-he" class="btn btn-secondary">Liên hệ đặt hàng</a>
+				</div>
+			</section>
+
+			<!-- Featured Products -->
+			{displayProducts.length > 0 && (
+				<section class="section">
+					<div class="section-header">
+						<h2>Sản phẩm nổi bật</h2>
+						<p>Những tác phẩm móc len được yêu thích nhất</p>
+					</div>
+					<div class="products-grid">
+						{displayProducts.map((product) => (
+							<ProductCard
+								name={product.data.name}
+								description={product.data.description}
+								priceRange={product.data.priceRange}
+								image={product.data.image}
+								slug={product.id}
+								tags={product.data.tags}
+								available={product.data.available}
+							/>
+						))}
+					</div>
+					<div class="section-cta">
+						<a href="/san-pham" class="btn btn-secondary">Xem tất cả sản phẩm</a>
+					</div>
+				</section>
+			)}
+
+			<!-- About Preview -->
+			<section class="about-preview">
+				<div class="about-content">
+					<h2>Về Góc Len của Rici</h2>
+					<p>
+						Mỗi sản phẩm tại đây đều được móc hoàn toàn thủ công với sự tỉ mỉ và tình yêu dành cho nghệ thuật móc len.
+						Từ những chú thú bông dễ thương đến các phụ kiện xinh xắn, tất cả đều mang đậm dấu ấn riêng.
+					</p>
+					<a href="/gioi-thieu" class="btn btn-primary">Tìm hiểu thêm</a>
+				</div>
+				<div class="about-image">
+					<img src="/blog-placeholder-about.jpg" alt="Góc Len của Rici" />
+				</div>
+			</section>
+
+			<!-- Recent Posts -->
+			{recentPosts.length > 0 && (
+				<section class="section">
+					<div class="section-header">
+						<h2>Bài viết mới nhất</h2>
+						<p>Chia sẻ kinh nghiệm và câu chuyện về móc len</p>
+					</div>
+					<div class="posts-grid">
+						{recentPosts.map((post) => (
+							<BlogCard
+								title={post.data.title}
+								description={post.data.description}
+								pubDate={post.data.pubDate}
+								heroImage={post.data.heroImage}
+								slug={post.id}
+							/>
+						))}
+					</div>
+					<div class="section-cta">
+						<a href="/bai-viet" class="btn btn-secondary">Xem tất cả bài viết</a>
+					</div>
+				</section>
+			)}
+
+			<!-- CTA Section -->
+			<section class="cta-section">
+				<h2>Bạn muốn đặt sản phẩm riêng?</h2>
+				<p>Liên hệ ngay để được tư vấn và báo giá theo yêu cầu của bạn!</p>
+				<a href="/lien-he" class="btn btn-primary">Liên hệ ngay</a>
+			</section>
 		</main>
 		<Footer />
 	</body>
 </html>
+
+<style>
+	.hero {
+		text-align: center;
+		padding: 4rem 2rem;
+		background: var(--pink-gradient);
+		border-radius: var(--radius-xl);
+		margin-bottom: 4rem;
+	}
+
+	.hero h1 {
+		font-size: 2.5rem;
+		margin-bottom: 1rem;
+		color: rgb(var(--black));
+	}
+
+	.hero p {
+		font-size: 1.2rem;
+		color: rgb(var(--gray));
+		max-width: 600px;
+		margin: 0 auto 2rem;
+		line-height: 1.6;
+	}
+
+	.hero-buttons {
+		display: flex;
+		gap: 1rem;
+		justify-content: center;
+		flex-wrap: wrap;
+	}
+
+	.section {
+		margin-bottom: 4rem;
+	}
+
+	.section-header {
+		text-align: center;
+		margin-bottom: 2.5rem;
+	}
+
+	.section-header h2 {
+		font-size: 2rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.section-header p {
+		color: rgb(var(--gray));
+		font-size: 1.1rem;
+	}
+
+	.products-grid {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 1.5rem;
+	}
+
+	.posts-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 1.5rem;
+	}
+
+	.section-cta {
+		text-align: center;
+		margin-top: 2rem;
+	}
+
+	.about-preview {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 3rem;
+		align-items: center;
+		padding: 3rem;
+		background: var(--primary-light);
+		border-radius: var(--radius-xl);
+		margin-bottom: 4rem;
+	}
+
+	.about-content h2 {
+		font-size: 2rem;
+		margin-bottom: 1rem;
+	}
+
+	.about-content p {
+		color: rgb(var(--gray));
+		line-height: 1.7;
+		margin-bottom: 1.5rem;
+	}
+
+	.about-image img {
+		width: 100%;
+		border-radius: var(--radius-lg);
+		box-shadow: var(--box-shadow);
+	}
+
+	.cta-section {
+		text-align: center;
+		padding: 4rem 2rem;
+		background: var(--pink-gradient);
+		border-radius: var(--radius-xl);
+	}
+
+	.cta-section h2 {
+		font-size: 2rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.cta-section p {
+		color: rgb(var(--gray));
+		font-size: 1.1rem;
+		margin-bottom: 1.5rem;
+	}
+
+	@media (max-width: 1024px) {
+		.products-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+
+		.posts-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	@media (max-width: 768px) {
+		.hero {
+			padding: 2.5rem 1.5rem;
+		}
+
+		.hero h1 {
+			font-size: 1.75rem;
+		}
+
+		.hero p {
+			font-size: 1rem;
+		}
+
+		.products-grid {
+			grid-template-columns: repeat(2, 1fr);
+			gap: 1rem;
+		}
+
+		.posts-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.about-preview {
+			grid-template-columns: 1fr;
+			padding: 2rem;
+		}
+
+		.about-image {
+			order: -1;
+		}
+
+		.section-header h2 {
+			font-size: 1.5rem;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.products-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

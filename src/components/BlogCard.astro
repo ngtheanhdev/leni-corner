@@ -1,0 +1,108 @@
+---
+import FormattedDate from './FormattedDate.astro';
+
+interface Props {
+	title: string;
+	description: string;
+	pubDate: Date;
+	heroImage?: string;
+	slug: string;
+}
+
+const { title, description, pubDate, heroImage, slug } = Astro.props;
+---
+
+<a href={`/bai-viet/${slug}`} class="blog-card">
+	{heroImage && (
+		<div class="blog-image">
+			<img src={heroImage} alt={title} loading="lazy" />
+		</div>
+	)}
+	<div class="blog-info">
+		<div class="blog-date">
+			<FormattedDate date={pubDate} />
+		</div>
+		<h3 class="blog-title">{title}</h3>
+		<p class="blog-desc">{description}</p>
+		<span class="read-more">Đọc thêm</span>
+	</div>
+</a>
+
+<style>
+	.blog-card {
+		display: block;
+		background: var(--bg-card);
+		border-radius: var(--radius-lg);
+		overflow: hidden;
+		box-shadow: var(--box-shadow);
+		transition: all 0.3s ease;
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.blog-card:hover {
+		transform: translateY(-6px);
+		box-shadow: var(--box-shadow-hover);
+	}
+
+	.blog-image {
+		aspect-ratio: 16/9;
+		overflow: hidden;
+	}
+
+	.blog-image img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 0.3s ease;
+		border-radius: 0;
+	}
+
+	.blog-card:hover .blog-image img {
+		transform: scale(1.05);
+	}
+
+	.blog-info {
+		padding: 1.25rem;
+	}
+
+	.blog-date {
+		font-size: 0.85rem;
+		color: rgb(var(--gray));
+		margin-bottom: 0.5rem;
+	}
+
+	.blog-title {
+		font-size: 1.15rem;
+		font-weight: 600;
+		color: rgb(var(--black));
+		margin: 0 0 0.5rem 0;
+		line-height: 1.4;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+
+	.blog-desc {
+		font-size: 0.9rem;
+		color: rgb(var(--gray));
+		margin: 0 0 1rem 0;
+		line-height: 1.5;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+
+	.read-more {
+		font-size: 0.9rem;
+		font-weight: 600;
+		color: var(--primary-dark);
+		transition: color 0.3s ease;
+	}
+
+	.blog-card:hover .read-more {
+		color: var(--primary);
+	}
+</style>
