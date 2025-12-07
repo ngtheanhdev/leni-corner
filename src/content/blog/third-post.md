@@ -1,16 +1,54 @@
 ---
-title: "Third post"
-description: "Lorem ipsum dolor sit amet"
-pubDate: "Jul 22 2022"
-heroImage: "/blog-placeholder-2.jpg"
+title: 'Cách chọn len phù hợp cho từng loại sản phẩm'
+description: 'Hướng dẫn chọn loại len phù hợp với từng loại sản phẩm móc len khác nhau.'
+pubDate: 'Dec 05 2024'
+heroImage: '/blog-placeholder-3.jpg'
 ---
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
+Không phải loại len nào cũng phù hợp với mọi sản phẩm. Hãy cùng tìm hiểu cách chọn len đúng!
 
-Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc. Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra massa massa ultricies mi.
+## Các loại len phổ biến
 
-Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
+### 1. Len Cotton
 
-Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id cursus metus aliquam eleifend mi.
+**Đặc điểm:**
+- Mềm, thoáng mát
+- Không xù lông
+- Giữ form tốt
 
-Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
+**Phù hợp với:**
+- Thú bông, amigurumi
+- Đồ dùng cho em bé
+- Túi xách, giỏ đựng đồ
+
+### 2. Len Acrylic
+
+**Đặc điểm:**
+- Giá rẻ
+- Nhiều màu sắc
+- Dễ tìm mua
+
+**Phù hợp với:**
+- Khăn, mũ, găng tay
+- Chăn, áo khoác
+- Đồ trang trí
+
+### 3. Len Milk Cotton
+
+**Đặc điểm:**
+- Mềm mịn như sữa
+- Màu sắc pastel đẹp
+- Không gây kích ứng da
+
+**Phù hợp với:**
+- Thú bông cao cấp
+- Đồ cho trẻ sơ sinh
+- Quà tặng đặc biệt
+
+## Tips chọn len
+
+1. **Đọc kỹ nhãn** - Xem thành phần, kích cỡ kim khuyên dùng
+2. **Sờ thử** - Cảm nhận độ mềm, độ xù lông
+3. **Mua thử 1 cuộn** - Test trước khi mua số lượng lớn
+
+Hy vọng bài viết giúp ích cho các bạn!

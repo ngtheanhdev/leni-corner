@@ -1,0 +1,195 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="vi">
+	<head>
+		<BaseHead
+			title={`Giới thiệu | ${SITE_TITLE}`}
+			description="Tìm hiểu về Góc Len của Rici - Nơi sinh ra những sản phẩm móc len handmade dễ thương"
+		/>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="page-header">
+				<h1>Giới thiệu</h1>
+				<p>Câu chuyện về Góc Len của Rici</p>
+			</section>
+
+			<article class="about-content">
+				<div class="about-image">
+					<img src="/blog-placeholder-about.jpg" alt="Góc Len của Rici" />
+				</div>
+
+				<div class="about-text">
+					<h2>Chào mừng bạn đến với Góc Len của Rici!</h2>
+					<p>
+						Góc Len của Rici là nơi sinh ra những sản phẩm móc len handmade dễ thương,
+						được tạo nên từ tình yêu và sự tỉ mỉ trong từng mũi kim.
+					</p>
+
+					<h3>Về tôi</h3>
+					<p>
+						Tôi là Rici, một người yêu thích nghệ thuật móc len từ nhỏ.
+						Mỗi sản phẩm tôi tạo ra đều mang đậm dấu ấn cá nhân và được chăm chút tỉ mỉ từng chi tiết.
+					</p>
+
+					<h3>Triết lý sáng tạo</h3>
+					<p>
+						Tôi tin rằng những sản phẩm handmade mang trong mình một giá trị đặc biệt -
+						không chỉ là vật phẩm, mà còn là tình cảm và tâm huyết của người tạo ra chúng.
+						Mỗi mũi kim, mỗi sợi len đều được chọn lọc kỹ càng để tạo nên những tác phẩm
+						không chỉ đẹp mà còn bền đẹp theo thời gian.
+					</p>
+
+					<h3>Sản phẩm</h3>
+					<p>
+						Tại Góc Len của Rici, bạn sẽ tìm thấy:
+					</p>
+					<ul>
+						<li>Thú bông móc len các loại</li>
+						<li>Phụ kiện trang trí</li>
+						<li>Quà tặng handmade độc đáo</li>
+						<li>Sản phẩm đặt theo yêu cầu</li>
+					</ul>
+
+					<h3>Cam kết</h3>
+					<p>
+						Mọi sản phẩm đều được móc hoàn toàn thủ công với chất liệu len an toàn,
+						phù hợp cho cả trẻ em và người lớn. Tôi luôn cố gắng mang đến những sản phẩm
+						chất lượng nhất với giá cả hợp lý.
+					</p>
+				</div>
+			</article>
+
+			<section class="cta-section">
+				<h2>Bạn muốn sở hữu một sản phẩm?</h2>
+				<p>Hãy ghé thăm bộ sưu tập hoặc liên hệ để đặt sản phẩm theo ý thích!</p>
+				<div class="cta-buttons">
+					<a href="/san-pham" class="btn btn-primary">Xem sản phẩm</a>
+					<a href="/lien-he" class="btn btn-secondary">Liên hệ ngay</a>
+				</div>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.page-header {
+		text-align: center;
+		padding: 3rem 0;
+		margin-bottom: 2rem;
+	}
+
+	.page-header h1 {
+		font-size: 2.5rem;
+		margin-bottom: 0.5rem;
+		color: rgb(var(--black));
+	}
+
+	.page-header p {
+		color: rgb(var(--gray));
+		font-size: 1.1rem;
+	}
+
+	.about-content {
+		display: grid;
+		grid-template-columns: 1fr 1.5fr;
+		gap: 3rem;
+		align-items: start;
+		margin-bottom: 4rem;
+	}
+
+	.about-image img {
+		width: 100%;
+		border-radius: var(--radius-lg);
+		box-shadow: var(--box-shadow);
+		position: sticky;
+		top: 100px;
+	}
+
+	.about-text h2 {
+		font-size: 1.75rem;
+		margin-bottom: 1rem;
+		color: var(--primary-dark);
+	}
+
+	.about-text h3 {
+		font-size: 1.25rem;
+		margin-top: 2rem;
+		margin-bottom: 0.75rem;
+		color: rgb(var(--black));
+	}
+
+	.about-text p {
+		line-height: 1.8;
+		color: rgb(var(--gray-dark));
+		margin-bottom: 1rem;
+	}
+
+	.about-text ul {
+		list-style: none;
+		padding: 0;
+		margin: 1rem 0;
+	}
+
+	.about-text li {
+		padding: 0.5rem 0;
+		padding-left: 1.5rem;
+		position: relative;
+		color: rgb(var(--gray-dark));
+	}
+
+	.about-text li::before {
+		content: '♥';
+		position: absolute;
+		left: 0;
+		color: var(--primary);
+	}
+
+	.cta-section {
+		text-align: center;
+		padding: 4rem 2rem;
+		background: var(--pink-gradient);
+		border-radius: var(--radius-xl);
+	}
+
+	.cta-section h2 {
+		font-size: 2rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.cta-section p {
+		color: rgb(var(--gray));
+		font-size: 1.1rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.cta-buttons {
+		display: flex;
+		gap: 1rem;
+		justify-content: center;
+		flex-wrap: wrap;
+	}
+
+	@media (max-width: 768px) {
+		.page-header h1 {
+			font-size: 2rem;
+		}
+
+		.about-content {
+			grid-template-columns: 1fr;
+			gap: 2rem;
+		}
+
+		.about-image img {
+			position: static;
+		}
+	}
+</style>

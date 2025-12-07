@@ -1,0 +1,194 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { SITE_TITLE } from '../../consts';
+import { getCollection } from 'astro:content';
+
+const allProducts = await getCollection('products');
+
+// Lấy tất cả tags unique
+const allTags = [...new Set(allProducts.flatMap(p => p.data.tags))];
+
+// Sắp xếp sản phẩm mới nhất trước
+const sortedProducts = allProducts.sort((a, b) => {
+	const dateA = a.data.createdDate?.valueOf() || 0;
+	const dateB = b.data.createdDate?.valueOf() || 0;
+	return dateB - dateA;
+});
+---
+
+<!doctype html>
+<html lang="vi">
+	<head>
+		<BaseHead
+			title={`Sản phẩm | ${SITE_TITLE}`}
+			description="Khám phá bộ sưu tập sản phẩm móc len handmade dễ thương tại Góc Len của Rici"
+		/>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="page-header">
+				<h1>Sản phẩm</h1>
+				<p>Khám phá bộ sưu tập sản phẩm móc len handmade dễ thương</p>
+			</section>
+
+			{allTags.length > 0 && (
+				<div class="tags-filter">
+					<button class="tag active" data-tag="all">Tất cả</button>
+					{allTags.map((tag) => (
+						<button class="tag" data-tag={tag}>{tag}</button>
+					))}
+				</div>
+			)}
+
+			{sortedProducts.length > 0 ? (
+				<div class="products-grid" id="products-grid">
+					{sortedProducts.map((product) => (
+						<div class="product-item" data-tags={product.data.tags.join(',')}>
+							<ProductCard
+								name={product.data.name}
+								description={product.data.description}
+								priceRange={product.data.priceRange}
+								image={product.data.image}
+								slug={product.id}
+								tags={product.data.tags}
+								available={product.data.available}
+							/>
+						</div>
+					))}
+				</div>
+			) : (
+				<div class="empty-state">
+					<p>Chưa có sản phẩm nào. Hãy quay lại sau nhé!</p>
+				</div>
+			)}
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.page-header {
+		text-align: center;
+		padding: 3rem 0;
+		margin-bottom: 2rem;
+	}
+
+	.page-header h1 {
+		font-size: 2.5rem;
+		margin-bottom: 0.5rem;
+		color: rgb(var(--black));
+	}
+
+	.page-header p {
+		color: rgb(var(--gray));
+		font-size: 1.1rem;
+	}
+
+	.tags-filter {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		justify-content: center;
+		margin-bottom: 2.5rem;
+	}
+
+	.tags-filter .tag {
+		cursor: pointer;
+		border: none;
+		background: var(--primary-light);
+		color: var(--primary-dark);
+		padding: 0.5rem 1rem;
+		border-radius: 20px;
+		font-size: 0.9rem;
+		font-weight: 500;
+		transition: all 0.3s ease;
+	}
+
+	.tags-filter .tag:hover,
+	.tags-filter .tag.active {
+		background: var(--primary);
+		color: white;
+	}
+
+	.products-grid {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 1.5rem;
+	}
+
+	.product-item {
+		transition: opacity 0.3s ease;
+	}
+
+	.product-item.hidden {
+		display: none;
+	}
+
+	.empty-state {
+		text-align: center;
+		padding: 4rem 2rem;
+		background: var(--primary-light);
+		border-radius: var(--radius-xl);
+	}
+
+	.empty-state p {
+		color: rgb(var(--gray));
+		font-size: 1.1rem;
+	}
+
+	@media (max-width: 1024px) {
+		.products-grid {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+
+	@media (max-width: 768px) {
+		.page-header h1 {
+			font-size: 2rem;
+		}
+
+		.products-grid {
+			grid-template-columns: repeat(2, 1fr);
+			gap: 1rem;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.products-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>
+
+<script>
+	const tagButtons = document.querySelectorAll('.tags-filter .tag');
+	const productItems = document.querySelectorAll('.product-item');
+
+	tagButtons.forEach(button => {
+		button.addEventListener('click', () => {
+			// Remove active class from all buttons
+			tagButtons.forEach(btn => btn.classList.remove('active'));
+			// Add active class to clicked button
+			button.classList.add('active');
+
+			const selectedTag = button.getAttribute('data-tag');
+
+			productItems.forEach(item => {
+				if (selectedTag === 'all') {
+					item.classList.remove('hidden');
+				} else {
+					const itemTags = item.getAttribute('data-tags')?.split(',') || [];
+					if (itemTags.includes(selectedTag)) {
+						item.classList.remove('hidden');
+					} else {
+						item.classList.add('hidden');
+					}
+				}
+			});
+		});
+	});
+</script>

@@ -1,0 +1,333 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { SITE_TITLE } from '../../consts';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+	const products = await getCollection('products');
+	return products.map((product) => ({
+		params: { slug: product.id },
+		props: { product },
+	}));
+}
+
+const { product } = Astro.props;
+const { Content } = await render(product);
+
+// Lấy sản phẩm liên quan (cùng tag)
+const allProducts = await getCollection('products');
+const relatedProducts = allProducts
+	.filter(p => p.id !== product.id)
+	.filter(p => p.data.tags.some(tag => product.data.tags.includes(tag)))
+	.slice(0, 4);
+---
+
+<!doctype html>
+<html lang="vi">
+	<head>
+		<BaseHead
+			title={`${product.data.name} | ${SITE_TITLE}`}
+			description={product.data.description}
+			image={product.data.image}
+		/>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<nav class="breadcrumb">
+				<a href="/">Trang chủ</a>
+				<span>/</span>
+				<a href="/san-pham">Sản phẩm</a>
+				<span>/</span>
+				<span>{product.data.name}</span>
+			</nav>
+
+			<article class="product-detail">
+				<div class="product-gallery">
+					<div class="main-image">
+						<img src={product.data.image} alt={product.data.name} />
+					</div>
+					{product.data.images && product.data.images.length > 0 && (
+						<div class="thumbnail-list">
+							<button class="thumbnail active">
+								<img src={product.data.image} alt={product.data.name} />
+							</button>
+							{product.data.images.map((img, index) => (
+								<button class="thumbnail">
+									<img src={img} alt={`${product.data.name} - Ảnh ${index + 2}`} />
+								</button>
+							))}
+						</div>
+					)}
+				</div>
+
+				<div class="product-info">
+					<h1>{product.data.name}</h1>
+					<p class="price">{product.data.priceRange}</p>
+
+					{product.data.tags.length > 0 && (
+						<div class="tags">
+							{product.data.tags.map((tag) => (
+								<a href={`/san-pham?tag=${tag}`} class="tag">{tag}</a>
+							))}
+						</div>
+					)}
+
+					<div class="description">
+						<p>{product.data.description}</p>
+					</div>
+
+					<div class="product-content prose">
+						<Content />
+					</div>
+
+					<div class="product-status">
+						{product.data.available ? (
+							<span class="status available">Có sẵn</span>
+						) : (
+							<span class="status sold-out">Hết hàng</span>
+						)}
+					</div>
+
+					<a href="/lien-he" class="btn btn-primary">
+						Liên hệ đặt hàng
+					</a>
+				</div>
+			</article>
+
+			{relatedProducts.length > 0 && (
+				<section class="related-products">
+					<h2>Sản phẩm liên quan</h2>
+					<div class="related-grid">
+						{relatedProducts.map((p) => (
+							<a href={`/san-pham/${p.id}`} class="related-item">
+								<img src={p.data.image} alt={p.data.name} />
+								<h3>{p.data.name}</h3>
+								<p class="price">{p.data.priceRange}</p>
+							</a>
+						))}
+					</div>
+				</section>
+			)}
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.breadcrumb {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		margin-bottom: 2rem;
+		font-size: 0.9rem;
+		color: rgb(var(--gray));
+	}
+
+	.breadcrumb a {
+		color: rgb(var(--gray));
+		text-decoration: none;
+	}
+
+	.breadcrumb a:hover {
+		color: var(--primary-dark);
+	}
+
+	.product-detail {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 3rem;
+		margin-bottom: 4rem;
+	}
+
+	.product-gallery {
+		position: sticky;
+		top: 100px;
+		align-self: start;
+	}
+
+	.main-image {
+		border-radius: var(--radius-lg);
+		overflow: hidden;
+		margin-bottom: 1rem;
+	}
+
+	.main-image img {
+		width: 100%;
+		aspect-ratio: 1;
+		object-fit: cover;
+	}
+
+	.thumbnail-list {
+		display: flex;
+		gap: 0.75rem;
+	}
+
+	.thumbnail {
+		width: 80px;
+		height: 80px;
+		border: 2px solid transparent;
+		border-radius: var(--radius-sm);
+		overflow: hidden;
+		cursor: pointer;
+		padding: 0;
+		background: none;
+		transition: all 0.3s ease;
+	}
+
+	.thumbnail:hover,
+	.thumbnail.active {
+		border-color: var(--primary);
+	}
+
+	.thumbnail img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		border-radius: 0;
+	}
+
+	.product-info h1 {
+		font-size: 2rem;
+		margin-bottom: 1rem;
+	}
+
+	.product-info .price {
+		font-size: 1.5rem;
+		font-weight: 700;
+		color: var(--primary-dark);
+		margin-bottom: 1.5rem;
+	}
+
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.description {
+		font-size: 1.1rem;
+		line-height: 1.7;
+		color: rgb(var(--gray-dark));
+		margin-bottom: 1.5rem;
+	}
+
+	.product-content {
+		margin-bottom: 2rem;
+		padding: 1.5rem;
+		background: var(--primary-light);
+		border-radius: var(--radius-md);
+	}
+
+	.product-status {
+		margin-bottom: 1.5rem;
+	}
+
+	.status {
+		display: inline-block;
+		padding: 0.5rem 1rem;
+		border-radius: 20px;
+		font-weight: 600;
+		font-size: 0.9rem;
+	}
+
+	.status.available {
+		background: #d4edda;
+		color: #155724;
+	}
+
+	.status.sold-out {
+		background: #f8d7da;
+		color: #721c24;
+	}
+
+	.related-products {
+		margin-top: 4rem;
+	}
+
+	.related-products h2 {
+		text-align: center;
+		margin-bottom: 2rem;
+	}
+
+	.related-grid {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 1.5rem;
+	}
+
+	.related-item {
+		text-decoration: none;
+		color: inherit;
+		background: var(--bg-card);
+		border-radius: var(--radius-lg);
+		overflow: hidden;
+		box-shadow: var(--box-shadow);
+		transition: all 0.3s ease;
+	}
+
+	.related-item:hover {
+		transform: translateY(-4px);
+		box-shadow: var(--box-shadow-hover);
+	}
+
+	.related-item img {
+		width: 100%;
+		aspect-ratio: 1;
+		object-fit: cover;
+		border-radius: 0;
+	}
+
+	.related-item h3 {
+		padding: 1rem 1rem 0.5rem;
+		font-size: 1rem;
+		margin: 0;
+	}
+
+	.related-item .price {
+		padding: 0 1rem 1rem;
+		font-size: 0.95rem;
+		font-weight: 600;
+		color: var(--primary-dark);
+		margin: 0;
+	}
+
+	@media (max-width: 768px) {
+		.product-detail {
+			grid-template-columns: 1fr;
+			gap: 2rem;
+		}
+
+		.product-gallery {
+			position: static;
+		}
+
+		.product-info h1 {
+			font-size: 1.5rem;
+		}
+
+		.related-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+</style>
+
+<script>
+	const thumbnails = document.querySelectorAll('.thumbnail');
+	const mainImage = document.querySelector('.main-image img') as HTMLImageElement;
+
+	thumbnails.forEach(thumb => {
+		thumb.addEventListener('click', () => {
+			thumbnails.forEach(t => t.classList.remove('active'));
+			thumb.classList.add('active');
+
+			const thumbImg = thumb.querySelector('img') as HTMLImageElement;
+			if (mainImage && thumbImg) {
+				mainImage.src = thumbImg.src;
+			}
+		});
+	});
+</script>
